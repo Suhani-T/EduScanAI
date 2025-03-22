@@ -142,6 +142,51 @@
 
         }
 
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            margin: 40px 10px;
+        }
+
+        .step-card {
+            border: none;
+            padding: 20px;
+            width: 250px;
+        }
+
+        .step-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #650de6;
+            text-align: left;
+        }
+
+        .step-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+
+        .step-content {
+            text-align: left;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #5b17fa;
+            margin-bottom: 5px;
+        }
+
+
+        .step-description {
+            font-size: 14px;
+            color: #555;
+        }
+
         .inputs{
             max-width: 600px;
             background: white;
@@ -225,11 +270,45 @@
         <h2 id="steps-to-use"class="headings">How to Use</h2>
     </div> 
 
-
-    <div  class="content">
-        <img src="{% static 'images/steps_to_use.png' %}" class="img-fluid">
+    <div class="container">
+        <div class="steps-container">
+            <div class="card step-card h-100">
+                <div class="step-number">01</div>
+                <img src="{% static 'images/step1.png' %}" alt="Step 1" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">PROVIDE ANSWER KEY</div>
+                    <div class="step-description">Upload correct answers and marking scheme</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">02</div>
+                <img src="{% static 'images/step2.png' %}" alt="Step 2" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">UPLOAD ANSWER SCRIPT</div>
+                    <div class="step-description">Scan and upload student answer sheets</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">03</div>
+                <img src="{% static 'images/step3.png' %}" alt="Step 3" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">AI EVALUATION & FEEDBACK</div>
+                    <div class="step-description">AI auto-grades, highlights mistakes, and generates personalized feedback</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">04</div>
+                <img src="{% static 'images/step4.png' %}" alt="Step 4" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">REVIEW & SEND FEEDBACK</div>
+                    <div class="step-description">Modify AI feedback and email it to students</div>
+                </div>
+            </div>
+        </div>
     </div>
-
 
     <div class="container content">
         <h2 class="headings">Evaluate Answer Script</h2>
