@@ -1,0 +1,369 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduScanAI</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color:#7c25ff;  
+            --secondary-color:#5b17fa; 
+            --text-color:white; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            height: 50px;
+            padding: 5px 20px; 
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            height: 35px; 
+            width: auto;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 16px;
+            padding: 8px 12px; 
+        }
+
+        .navbar-toggler {
+            padding: 5px 8px;
+            border: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                height: auto; 
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.9); 
+                padding: 10px 0;
+            }
+
+            .nav-item {
+                padding: 8px 0;
+            }
+        }
+
+        .hero {
+            background: url("{% static 'images/hero_background.png' %}") no-repeat center center/cover;
+            height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: left;
+            color: var(--text-color);
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            margin-left:55px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .try{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            background: var(--primary-color);
+            box-shadow: 0px 0px 5px 2px rgb(57, 57, 57);
+            transition: transform 0.2s ease;
+        }
+
+        .try:hover{
+            transform: scale(1.1);
+            background:var(--secondary-color);
+        }
+
+        
+
+        .content {
+            margin: 40px;
+        }
+
+        .evaluate{
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            background: var(--secondary-color);
+            transition: transform 0.2s ease;
+        }
+        .evaluate:hover{
+            transform: scale(1.1);
+            background:var(--primary-color);
+
+        }
+       
+
+        .headings {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        #usage img {
+            width: 97%;
+            margin:19px;
+
+        }
+
+        .inputs{
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color:var(--secondary-color);
+        }
+
+        .review img{
+            border-color:2px solid #5b17fa;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-left:8rem;
+            max-width:400px;
+        }
+
+        .footer {
+            background: black;
+            color: var(--text-color);
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black px-5">
+        <a class="navbar-brand" href="#"><img src="{% static 'images/EduScan_logo.png' %}" height="45px" width="200px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- <li class="nav-item"><a class="nav-link" href="#">Home</a></li> -->
+                <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
+                <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="overlay">
+            <h1>AI-Powered Teaching Assistant <br> for Faster Grading</h1>
+            <p>Automated grading, personalized feedback, and save <br> valuable teaching time.</p>
+            <div class="buttons">
+                <button class="try" onclick="scrollToSection('steps-to-use')">Try it out ➜ </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <h2 class="headings">Our Vision</h2>
+        <p>
+            In modern education, teachers are burdened with large classroom sizes, extensive grading responsibilities, and the challenge of providing meaningful feedback to students. 
+            Manual grading is not only time-consuming but also limits a teacher’s ability to deliver personalized guidance. 
+            Our AI-Powered Teaching Assistant is designed to revolutionize the grading process by automating evaluation, generating personalized feedback, and reducing the workload of educators.
+        </p>
+    </div>
+
+    <div class="container content">
+        <h2 id="steps-to-use"class="headings">How to Use</h2>
+    </div> 
+
+
+    <div  class="content">
+        <img src="{% static 'images/steps_to_use.png' %}" class="img-fluid">
+    </div>
+
+
+    <div class="container content">
+        <h2 class="headings">Evaluate Answer Script</h2>
+    </div>    
+    
+    <div class="container content d-flex align-items-start gap-5"> 
+        <div class="w-50">
+            <form id="evaluationForm">
+                <div class="mb-3">
+                    <label for="teacherEmail" class="form-label fw-bold">Teacher's Email</label>
+                    <input type="email" class="form-control" id="teacherEmail" placeholder="Enter teacher's email" required>
+                </div>
+    
+
+
+                <div class="mb-3">
+                    <label for="answerKey" class="form-label fw-bold">Answer Key Document</label>
+                    <input type="file" class="form-control" id="answerKey" accept=".txt" required>
+                    <small class="text-muted">Upload text document</small>
+                </div>
+    
+                <div class="student-input-box p-3 border rounded position-relative">
+                    <button type="button" class="btn btn-outline-secondary position-absolute top-0 end-0 m-2" id="resetButton">Reset</button>
+    
+                    <div class="mb-3">
+                        <label for="studentEmail" class="form-label fw-bold">Student's Email</label>
+                        <input type="email" class="form-control" id="studentEmail" placeholder="Enter student's email" required>
+                    </div>
+    
+
+                    <div class="mb-3">
+                        <label for="studentScript" class="form-label fw-bold">Student's Answer Script</label>
+                        <input type="file" class="form-control" id="studentScript" accept=".pdf,.jpg,.png" required>
+                        <small class="text-muted">Please scan and upload document</small>
+                    </div>
+                </div>
+                <br>
+    
+
+                <div>
+                    <button class="evaluate btn btn-primary" type="button" id="evaluateButton">Evaluate</button>
+                </div>
+            </form>
+        </div>
+    
+        <div class="review ml-auto">
+            <img src="{% static 'images/review_logo.png' %}" class="img-fluid" alt="Review Logo">
+        </div>
+    </div>
+
+
+    <div class="container content mt-5">
+        <h2 class="mb-4 headings">Generated Feedback</h2>
+    
+        <form id="feedbackForm">
+            <div class="mb-3">
+                <label for="feedbackText" class="form-label fw-bold">Generated Feedback</label>
+                <textarea id="feedbackText" class="form-control" rows="5" placeholder="Generated feedback will appear here..." required></textarea>
+            </div>
+    
+            <button class="evaluate btn btn-primary" type="button" id="sendFeedbackButton">Send Feedback</button>
+            <p id="message" class="mt-3 text-success fw-bold"></p>
+        </form>
+    </div>
+    
+    
+    
+    <div id="about-section" class="container content mt-5">
+        <h2 class="mb-4 headings">About EduScanAI</h2>
+        EduScanAI is an AI-powered teaching assistant designed to automate grading, provide personalized feedback, and enhance the learning experience. Our platform converts handwritten answers into text, evaluates them using advanced AI models, and generates meaningful feedback to help both students and educators.
+
+        <div>
+        Key Features:<br>
+        ☑️ Handwriting-to-Text Conversion – Accurately extracts handwritten responses.<br>
+        ☑️ AI-Powered Evaluation – Compares answers with expected solutions and assigns scores.<br>
+        ☑️ Instant Feedback – Provides constructive insights to improve student performance.<br>
+        ☑️ Time-Saving Automation – Reduces the burden of manual grading for educators.<br>
+        </div>
+        <br>
+        We believe in leveraging AI to make education smarter, more efficient, and accessible for all!
+        <br>
+        <br>
+        
+        <h2 class="mb-4 headings">Meet the Team: SUAN</h2>
+
+        SUAN represents two enthusiastic women in tech, driven by the passion to bridge the gap between AI and education.
+        <br>
+        <br>
+        <div>
+        👩‍💻 Smart – Always innovating and finding smarter ways to improve learning.<br>
+        👩‍💻 United – Strong teamwork and collaboration define our approach.<br>
+        👩‍💻 Ambitious – We aim high, constantly pushing boundaries in AI and tech.<br>
+        👩‍💻 Nurturing – We foster a community of learning, growth, and inclusivity.<br>
+        </div>
+        <br>
+
+        As young tech enthusiasts, we are dedicated to building AI solutions that truly make a difference. EduScanAI is just the beginning of our journey to revolutionize education with technology! 
+    </div>
+    
+
+    <footer class="footer">
+        <p>© 2025 EduScanAI. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // function scrollToSection(sectionId) {
+        //     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+        // }
+        function scrollToSection(sectionId) {
+            let section = document.getElementById(sectionId);
+            let offset =70; 
+            let sectionPosition = section.getBoundingClientRect().top + window.scrollY - offset;
+
+            window.scrollTo({ top: sectionPosition, behavior: "smooth" });
+        }
+    </script>
+
+
+    <script>
+        function resetStudentInputs() {
+            document.getElementById("studentEmail").value = "";
+            document.getElementById("studentScript").value = "";
+        }
+    </script>
+
+    <script src="{% static 'js/evaluation.js' %}"></script>
+
+
+
+
+
+    
+</body>
+</html>
