@@ -148,3 +148,7 @@ STATICFILES_DIRS = [
 
 
 
+BASE_DIR = Path(__file__).resolve().parent.parent  
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, "credentials", "service-account.json")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
+
