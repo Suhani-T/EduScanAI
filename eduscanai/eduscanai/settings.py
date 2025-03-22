@@ -17,12 +17,14 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+SECRET_KEY= env("SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kg4$f7al_$531bvmcvoc!==u2vb=r3pr=4n(a@dddgcw$_v%4d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -147,4 +149,8 @@ STATICFILES_DIRS = [
 ]
 
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent  
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, "credentials", "service-account.json")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 
