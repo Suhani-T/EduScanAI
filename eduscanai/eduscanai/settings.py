@@ -24,8 +24,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = env("GOOGLE_APPLICATION_CREDENTIALS")
 
 GOOGLE_CREDENTIALS_PATH = os.path.join(BASE_DIR, "credentials", "service-account.json")
-# print("Final Path:", GOOGLE_CREDENTIALS_PATH)
-# print("Exists:", os.path.exists(GOOGLE_CREDENTIALS_PATH))
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_CREDENTIALS_PATH
 
