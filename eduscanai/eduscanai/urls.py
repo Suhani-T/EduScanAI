@@ -23,4 +23,6 @@ urlpatterns = [
     path('', grading.views.index , name='index'),
     path("evaluate/", grading.views.evaluate, name="evaluate"),
     path("send-feedback/", grading.views.send_feedback, name="send_feedback"),
+    path('send-otp/', grading.views.send_otp, name='send_otp'),
+    path('verify-otp/', grading.views.verify_otp, name='verify_otp'),
 ]
