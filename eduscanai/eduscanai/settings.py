@@ -13,12 +13,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+from google.cloud import translate_v2 as translate
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+
+# GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, "credentials", "service-account.json")
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = env("GOOGLE_APPLICATION_CREDENTIALS")
+
+GOOGLE_CREDENTIALS_PATH = os.path.join(BASE_DIR, "credentials", "service-account.json")
+# print("Final Path:", GOOGLE_CREDENTIALS_PATH)
+# print("Exists:", os.path.exists(GOOGLE_CREDENTIALS_PATH))
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_CREDENTIALS_PATH
 
 SECRET_KEY= env("SECRET_KEY")
 
@@ -150,7 +159,4 @@ STATICFILES_DIRS = [
 
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent  
-GOOGLE_APPLICATION_CREDENTIALS = os.path.join(BASE_DIR, "credentials", "service-account.json")
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_APPLICATION_CREDENTIALS
 

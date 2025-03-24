@@ -222,3 +222,22 @@ def extract_text(file):
 
     else:
         return None  
+    
+from google.cloud import translate_v2 as translate
+
+def translate_text(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        text_list = data.get('text', [])
+        target_lang = data.get('target', 'en')
+
+        if not text_list:
+            return JsonResponse({"error": "No text provided"}, status=400)
+
+        translate_client = translate.Client()
+        translations = translate_client.translate(text_list, target_language=target_lang)
+
+        translated_texts = [t['translatedText'] for t in translations]
+
+        return JsonResponse({"translations": translated_texts})

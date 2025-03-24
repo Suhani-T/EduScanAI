@@ -23,4 +23,5 @@ urlpatterns = [
     path('', grading.views.index , name='index'),
     path("evaluate/", grading.views.evaluate, name="evaluate"),
     path("send-feedback/", grading.views.send_feedback, name="send_feedback"),
+    path('translate/', grading.views.translate_text, name='translate_text'),
 ]
