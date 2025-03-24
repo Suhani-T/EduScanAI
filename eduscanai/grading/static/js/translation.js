@@ -1,5 +1,5 @@
 function translatePage(targetLang) {
-    let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a, input, textarea, small.text-muted, div.step-title, div.step-description, div, h2.headings");
+    let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a, input, textarea, small.text-muted, div.step-title, div.step-description, div, h2.headings, #message");
     let textArray = [];
 
     elements.forEach(el => {
@@ -34,7 +34,14 @@ function translatePage(targetLang) {
 }
 
 function getCSRFToken() {
-    return document.cookie.split('; ')
+    let csrfToken = document.cookie.split('; ')
         .find(row => row.startsWith('csrftoken'))
         ?.split('=')[1];
+
+    if (!csrfToken) {
+        console.error("CSRF token not found!");
+        alert("Error: CSRF token missing. Please refresh the page.");
+    }
+
+    return csrfToken;
 }
