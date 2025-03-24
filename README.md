@@ -27,15 +27,16 @@ The AI-Powered Teacher Assistant is a web application designed to automate gradi
 1. **Clone the Repository**
 
    ```sh
-   git clone https://github.com/yourusername/ai-teacher-assistant.git
-   cd ai-teacher-assistant
+   git clone https://github.com/Suhani-T/EduScanAI.git
+   cd EduScanGIT
+   cd eduscanai
    ```
 
 2. **Create a Virtual Environment**
 
    ```sh
    python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   venv\Scripts\activate
    ```
 
 3. **Install Dependencies**
