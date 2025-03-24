@@ -143,6 +143,52 @@
 
         }
 
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            margin: 40px 10px;
+        }
+
+        .step-card {
+            border: none;
+            padding: 20px;
+            width: 250px;
+        }
+
+        .step-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #650de6;
+            text-align: left;
+        }
+
+        .step-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius:8px;
+        }
+
+
+        .step-content {
+            text-align: left;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #5b17fa;
+            margin-bottom: 5px;
+        }
+
+
+        .step-description {
+            font-size: 14px;
+            color: #555;
+        }
+
         .inputs{
             max-width: 600px;
             background: white;
@@ -183,6 +229,17 @@
         .footer a:hover {
             text-decoration: underline;
         }
+
+        .notranslate {
+            unicode-bidi: isolate; 
+        }
+        .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -199,6 +256,38 @@
                 
                 <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
                 <button class="btn btn-primary" id="authenticateButton">Authenticate</button>
+                
+                <li class="nav-item dropdown notranslate">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🌍 <span id="selected-language">English</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('English'); translatePage('en');">English</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('français'); translatePage('fr');">français</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('español'); translatePage('es');">español (Spanish)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('हिन्दी'); translatePage('hi');">हिन्दी (Hindi)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Deutsch'); translatePage('de');">Deutsch (German)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('中文'); translatePage('zh-CN');">中文 (Chinese Simplified)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Русский'); translatePage('ru');">Русский (Russian)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Português'); translatePage('pt');">Português (Portuguese)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('日本語'); translatePage('ja');">日本語 (Japanese)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('한국어'); translatePage('ko');">한국어 (Korean)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Italiano'); translatePage('it');">Italiano (Italian)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Türkçe'); translatePage('tr');">Türkçe (Turkish)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('العربية'); translatePage('ar');">العربية (Arabic)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('বাংলা'); translatePage('bn');">বাংলা (Bengali)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Tiếng Việt'); translatePage('vi');">Tiếng Việt (Vietnamese)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Polski'); translatePage('pl');">Polski (Polish)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Nederlands'); translatePage('nl');">Nederlands (Dutch)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Українська'); translatePage('uk');">Українська (Ukrainian)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('עברית'); translatePage('he');">עברית (Hebrew)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('ไทย'); translatePage('th');">ไทย (Thai)</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="setLanguage('Swahili'); translatePage('sw');">Swahili</a></li>
+                    </ul>
+                </li>
+
+                
+                
 
             </ul>
         </div>
@@ -228,9 +317,44 @@
         <h2 id="steps-to-use"class="headings">How to Use</h2>
     </div> 
 
-
-    <div  class="content">
-        <img src="{% static 'images/steps_to_use.png' %}" class="img-fluid">
+    <div class="container">
+        <div class="steps-container">
+            <div class="card step-card h-100">
+                <div class="step-number">01</div>
+                <img src="{% static 'images/step1.png' %}" alt="Step 1" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">PROVIDE ANSWER KEY</div>
+                    <div class="step-description">Upload correct answers and marking scheme</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">02</div>
+                <img src="{% static 'images/step2.png' %}" alt="Step 2" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">UPLOAD ANSWER SCRIPT</div>
+                    <div class="step-description">Scan and upload student answer sheets</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">03</div>
+                <img src="{% static 'images/step3.png' %}" alt="Step 3" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">AI EVALUATION & FEEDBACK</div>
+                    <div class="step-description">AI auto-grades, highlights mistakes, and generates personalized feedback</div>
+                </div>
+            </div>
+    
+            <div class="card step-card h-100">
+                <div class="step-number">04</div>
+                <img src="{% static 'images/step4.png' %}" alt="Step 4" class="step-image">
+                <div class="step-content">
+                    <div class="step-title">REVIEW & SEND FEEDBACK</div>
+                    <div class="step-description">Modify AI feedback and email it to students</div>
+                </div>
+            </div>
+        </div>
     </div>
    <!-- otp sec -->
 
@@ -263,7 +387,6 @@
     </div>
 </div>
 <!-- evaluation sec -->
-
 
     <div class="container content">
         <h2 class="headings">Evaluate Answer Script</h2>
@@ -633,6 +756,19 @@
         });
     });
 </script>
+    <script>
+        function resetStudentInputs() {
+            document.getElementById("studentEmail").value = "";
+            document.getElementById("studentScript").value = "";
+        }
+
+        function setLanguage(lang) {
+            document.getElementById("selected-language").textContent = lang;
+        }
+    </script>
+
+    <!-- <script src="{% static 'js/evaluation.js' %}"></script> -->
+    <script src="{% static 'js/translation.js' %}"></script>
 
 
 
