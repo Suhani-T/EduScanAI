@@ -274,33 +274,33 @@
 
 
         .btn-gradient-danger {
-  position: relative;
-  overflow: hidden;
-  background-color: transparent;
-  border: 2px solid var(--secondary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: color 0.3s ease, border 0.3s ease;
-  z-index: 1;
-}
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: color 0.3s ease, border 0.3s ease;
+            z-index: 1;
+        }
 
-.btn-gradient-danger::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #ff004c, var(--secondary-color));
-  transition: all 0.4s ease;
-  z-index: -1;
-}
+        .btn-gradient-danger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff004c, var(--secondary-color));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
 
-.btn-gradient-danger:hover::before {
-  left: 0;
-}
+        .btn-gradient-danger:hover::before {
+            left: 0;
+        }
 
 .btn-gradient-danger:hover {
   color: var(--text-color);
@@ -823,7 +823,7 @@
 
         
         document.getElementById("resetButton").addEventListener("click", function () {
-            resetAllForms();
+            resetStudentInputs();
         });
     });
 </script>
@@ -839,6 +839,7 @@
     </script>
 
     <!-- <script src="{% static 'js/evaluation.js' %}"></script> -->
+     
     <script src="{% static 'js/translation.js' %}"></script>
 
 
