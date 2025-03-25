@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-
+        console.log("Custom Prompt Value Before Sending:", customPrompt);
         let formData = new FormData();
         formData.append("teacher_email", teacherEmail);
         formData.append("student_email", studentEmail);
