@@ -122,7 +122,7 @@ def evaluate(request):
 
            
             model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(f"Compare this student answer: {student_script} with answer key: {answer_key}. Provide constructive feedback.")
+            response = model.generate_content(f"Compare this student answer: {student_script} with answer key: {answer_key}. Provide constructive feedback. Give the total score of the student at the end of the feedback, based on the marking scheme provided in the answerkey if present. If there is a spelling mistake ignore it unless it is a language or grammar or literature paper as it may likely be text extraction issues. Give partial marking in subjective type questions unless mentioned otherwise in the answerkey. Suggest resources like websites or videos to study weak topics from")
 
             
             feedback = response.candidates[0].content.parts[0].text if response.candidates else "Unable to generate feedback."

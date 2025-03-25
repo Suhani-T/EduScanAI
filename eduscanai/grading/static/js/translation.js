@@ -1,6 +1,6 @@
 function translatePage(targetLang) {
     // let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a, input[placeholder], textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
-    let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a, input[placeholder], input, textarea, textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
+    let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a:not(.notranslate), input[placeholder], input, textarea, textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
 
     let textArray = [];
 
