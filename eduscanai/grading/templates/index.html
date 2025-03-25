@@ -7,6 +7,7 @@
     <title>EduScanAI</title>
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet">
 
     <meta name="csrf-token" content="{{ csrf_token }}">
@@ -378,6 +379,43 @@
         color: var(--text-color);
         border: 2px solid black;
         }
+        /* for dark mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        .dark-mode .navbar {
+            background-color: #1a1a1a !important;
+        }
+
+        .dark-mode .overlay {
+            background: rgba(0, 0, 0, 0.8);
+            color: #f8f9fa;
+        }
+
+        .dark-mode .content {
+            color: #f8f9fa;
+        }
+
+        .dark-mode .inputs {
+            background-color: #2d2d2d;
+            color: #f8f9fa;
+        }
+
+        .dark-mode .form-control {
+            background-color: #c0bfbf;
+            color: #f8f9fa;
+            border-color: #4d4d4d;
+        }
+
+        .dark-mode .footer {
+            background-color: #1a1a1a;
+        }
+
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
         @media screen and (max-width: 768px) {
             .steps-container {
@@ -409,6 +447,139 @@
         }
 
 
+        .dark-mode .step-card {
+            background-color: transparent !important; 
+        }
+
+
+        .dark-mode .step-card .step-description {
+            color: #cccccc !important;
+        }
+
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+
+/* //ripple effect */
+
+
+        #darkModeToggle {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+           
+        }
+
+        #darkModeToggle .dark-mode-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        #darkModeToggle .bi {
+            transition: transform 0.5s ease, color 0.3s ease;
+        }
+
+        #darkModeToggle:hover .bi {
+            transform: rotate(15deg);
+        }
+
+        .dark-mode #darkModeToggle .bi-sun-fill {
+            animation: sunPulse 2s infinite;
+        }
+
+        @keyframes sunPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .dark-mode #darkModeToggle .bi-moon-fill {
+            animation: moonFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+      
+/* dark mode otp box */
+       
+        .dark-mode .modal-content {
+            background-color: #2d2d2d;
+            color: #f8f9fa;
+            border: 1px solid #444;
+        }
+
+        .dark-mode .modal-header {
+            border-bottom-color: #444;
+        }
+
+        .dark-mode .modal-footer {
+            border-top-color: #444;
+        }
+
+        .dark-mode .form-label {
+            color: #9d65ff;
+        }
+
+        .dark-mode .form-control {
+            background-color: #515151 !important;
+            color: #f8f9fa;
+            border-color: #555;
+        }
+
+        .dark-mode .form-control:focus {
+            background-color: #3d3d3d;
+            color: #f8f9fa;
+            border-color: #7c25ff;
+            box-shadow: 0 0 0 0.25rem rgba(124, 37, 255, 0.25);
+        }
+
+        .dark-mode .btn-secondary {
+            background-color: #555;
+            border-color: #555;
+            color: #f8f9fa;
+        }
+
+        .dark-mode .sendotpbtn {
+            background-color: #000000;
+            color: #f8f9fa;
+            border-color: #000000;
+        }
+
+        .dark-mode .verifyotpbtn {
+            background-color: #5b17fa;
+            color: #f8f9fa;
+            border-color: #5b17fa;
+        }
+
+        .dark-mode .btn-close {
+            filter: invert(1);
+        }
+
+        .dark-mode ::placeholder {
+        color: white;
+        opacity: 1;
+        }
 
 
 
@@ -425,8 +596,18 @@
             <ul class="navbar-nav">
                 <!-- <li class="nav-item"><a class="nav-link" href="#">Home</a></li> -->
                 <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
-                
+                <!-- <li class="nav-item"><button id="darkModeToggle" class="btn btn-link nav-link"> <i class="bi bi-moon-fill"></i> Dark Mode</button></li> -->
+                <li class="nav-item">
+                    <button id="darkModeToggle" class="btn btn-link nav-link">
+                        <i class="bi bi-moon-fill"></i>
+                        <span class="dark-mode-text">Dark Mode</span>
+                        <span class="dark-mode-ripple"></span> 
+                    </button>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
+                
+
+
                 
 
                 <li class="nav-item dropdown notranslate">
@@ -993,7 +1174,87 @@
         function setLanguage(lang) {
             document.getElementById("selected-language").textContent = lang;
         }
+
+
+//dark mode js
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const icon = darkModeToggle.querySelector('i');
+            const text = darkModeToggle.querySelector('.dark-mode-text') || document.createElement('span');
+            
+        
+            const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = localStorage.getItem('theme') || (systemPrefersDark ? 'dark' : 'light');
+            
+                if (currentTheme === 'dark') {
+                enableDarkMode(darkModeToggle, icon, text, false);
+            }
+
+            
+            darkModeToggle.addEventListener('click', function(e) {
+                
+                createRippleEffect(this, e);
+                
+            
+                if (document.body.classList.contains('dark-mode')) {
+                    disableDarkMode(darkModeToggle, icon, text);
+                } else {
+                    enableDarkMode(darkModeToggle, icon, text, true);
+                }
+            });
+        });
+        //ripple js
+        function createRippleEffect(button, event) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('dark-mode-ripple');
+            
+            const rect = button.getBoundingClientRect();
+            ripple.style.left = `${event.clientX - rect.left}px`;
+            ripple.style.top = `${event.clientY - rect.top}px`;
+            
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function enableDarkMode(button, icon, text, animate = true) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+            
+            
+            icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            if (text) text.textContent = 'Light Mode';
+            
+        
+            if (animate) {
+                icon.style.animation = 'sunPulse 0.5s ease';
+                setTimeout(() => {
+                    icon.style.animation = 'sunPulse 2s infinite';
+                }, 500);
+            }
+        }
+
+        function disableDarkMode(button, icon, text, animate = true) {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            
+        
+            icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            if (text) text.textContent = 'Dark Mode';
+            
+            
+            if (animate) {
+                icon.style.animation = 'moonFloat 0.5s ease';
+                setTimeout(() => {
+                    icon.style.animation = 'moonFloat 3s infinite ease-in-out';
+                }, 500);
+            }
+        }
+
+
     </script>
+
+
 
     <!-- <script src="{% static 'js/evaluation.js' %}"></script> -->
      
