@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet">
 
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <style>
         :root {
             --primary-color:#7c25ff;  
@@ -130,8 +131,42 @@
         .evaluate:hover{
             transform: scale(1.1);
             background:var(--primary-color);
-
+            color: var(--text-color);
         }
+
+        .sendotpbtn{
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            background: black;
+            transition: transform 0.2s ease;
+        }
+        .sendotpbtn:hover{
+            transform: scale(1.1);
+            background:black;
+            color: var(--text-color);
+        }
+
+        .verifyotpbtn{
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-color);
+            background: var(--secondary-color);
+            transition: transform 0.2s ease;
+        }
+        .verifyotpbtn:hover{
+            transform: scale(1.1);
+            background:var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .close:hover{
+            transform: scale(1.1);
+        }
+       
+
        
 
         .headings {
@@ -244,7 +279,43 @@
             font-family: 'Noto Color Emoji', sans-serif;
         }
 
-        
+        .btn-gradient-danger {
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: color 0.3s ease, border 0.3s ease;
+            z-index: 1;
+        }
+
+        .btn-gradient-danger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff004c, var(--secondary-color));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-gradient-danger:hover::before {
+            left: 0;
+        }
+
+        .btn-gradient-danger:hover {
+        color: var(--text-color);
+        border: 2px solid black;
+        }
+
+
+
+
 
     </style>
 </head>
@@ -259,7 +330,9 @@
             <ul class="navbar-nav">
                 <!-- <li class="nav-item"><a class="nav-link" href="#">Home</a></li> -->
                 <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
+                
                 <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
+                
                 
                 <li class="nav-item dropdown notranslate">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -332,7 +405,7 @@
                     </ul> 
                 </li>
 
-                
+                <button class="btn btn-gradient-danger" style="border-radius: 8px;" id="authenticateButton">Authenticate</button>
                 
 
             </ul>
@@ -402,6 +475,37 @@
             </div>
         </div>
     </div>
+   <!-- otp sec -->
+
+   <div class="modal" tabindex="-1" id="otpModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter OTP</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="otp-form">
+                {% csrf_token %}
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Enter your Email</label>
+                    <input type="email" class="form-control" id="emailInput" placeholder="Teacher's Email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="otpInput" class="form-label">Enter OTP</label>
+                    <input type="text" class="form-control" id="otpInput" placeholder="Enter OTP" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close"  data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn sendotpbtn"  id="sendOtpButton">Send OTP</button>
+                <button type="button" class="btn verifyotpbtn" id="verifyOtpButton">Verify OTP</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- evaluation sec -->
 
     <div class="container content">
         <h2 class="headings">Evaluate Answer Script</h2>
@@ -412,7 +516,8 @@
             <form id="evaluationForm">
                 <div class="mb-3">
                     <label for="teacherEmail" class="form-label fw-bold">Teacher's Email</label>
-                    <input type="email" class="form-control" id="teacherEmail" placeholder="Enter teacher's email" required>
+                    <input type="email" id="teacherEmail" name="teacher_email" class="form-control" disabled>
+                    <!-- <input type="email" class="form-control" id="teacherEmail" placeholder="Enter teacher's email" required> -->
                 </div>
     
 
@@ -442,7 +547,8 @@
     
 
                 <div>
-                    <button class="evaluate btn btn-primary" type="button" id="evaluateButton">Evaluate</button>
+                    <!-- <button class="evaluate btn btn-primary" type="button" id="evaluateButton">Evaluate</button> -->
+                    <button type="submit" class="btn evaluate" id="evaluateButton" disabled>Evaluate</button>
                 </div>
             </form>
         </div>
@@ -462,7 +568,7 @@
                 <textarea id="feedbackText" class="form-control" rows="5" placeholder="Generated feedback will appear here..." required></textarea>
             </div>
     
-            <button class="evaluate btn btn-primary" type="button" id="sendFeedbackButton">Send Feedback</button>
+            <button class="evaluate btn " type="button" id="sendFeedbackButton">Send Feedback</button>
             <p id="message" class="mt-3 text-success fw-bold"></p>
         </form>
     </div>
@@ -471,34 +577,40 @@
     
     <div id="about-section" class="container content mt-5">
         <h2 class="mb-4 headings">About EduScanAI</h2>
+        <p>
         EduScanAI is an AI-powered teaching assistant designed to automate grading, provide personalized feedback, and enhance the learning experience. Our platform converts handwritten answers into text, evaluates them using advanced AI models, and generates meaningful feedback to help both students and educators.
-
+        </p>
         <div>
+        <p>
         Key Features:<br>
         ☑️ Handwriting-to-Text Conversion – Accurately extracts handwritten responses.<br>
         ☑️ AI-Powered Evaluation – Compares answers with expected solutions and assigns scores.<br>
         ☑️ Instant Feedback – Provides constructive insights to improve student performance.<br>
         ☑️ Time-Saving Automation – Reduces the burden of manual grading for educators.<br>
+        </p>
         </div>
-        <br>
+
+        <p>
         We believe in leveraging AI to make education smarter, more efficient, and accessible for all!
-        <br>
-        <br>
+        </p>
         
         <h2 class="mb-4 headings">Meet the Team: SUAN</h2>
-
+        <p>
         SUAN represents two enthusiastic women in tech, driven by the passion to bridge the gap between AI and education.
-        <br>
-        <br>
+        </p>
+
         <div>
+        <p>
         👩‍💻 Smart – Always innovating and finding smarter ways to improve learning.<br>
         👩‍💻 United – Strong teamwork and collaboration define our approach.<br>
         👩‍💻 Ambitious – We aim high, constantly pushing boundaries in AI and tech.<br>
         👩‍💻 Nurturing – We foster a community of learning, growth, and inclusivity.<br>
+        </p>
         </div>
-        <br>
 
+        <p>
         As young tech enthusiasts, we are dedicated to building AI solutions that truly make a difference. EduScanAI is just the beginning of our journey to revolutionize education with technology! 
+        </p>
     </div>
     
 
@@ -509,19 +621,266 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        // function scrollToSection(sectionId) {
-        //     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
-        // }
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        let isAuthenticated = false;
+        let teacherEmail = '';
+
+
+        function updateAuthUI() {
+            const authButton = document.getElementById('authenticateButton');
+            const teacherEmailInput = document.getElementById('teacherEmail');
+            const evaluateButton = document.getElementById('evaluateButton');
+            
+            if (isAuthenticated) {
+                authButton.textContent = 'Logout';
+                authButton.classList.remove('evaluate');
+                authButton.classList.add('btn-gradient-danger');
+                teacherEmailInput.value = teacherEmail;
+                evaluateButton.disabled = false; 
+            } else {
+                authButton.textContent = 'Authenticate';
+                authButton.classList.remove('btn-gradient-danger');
+                authButton.classList.add('evaluate');
+                teacherEmailInput.value = '';
+                evaluateButton.disabled = true; 
+                resetAllForms(); 
+            }
+        }
+
+        
+        function resetAllForms() {
+           
+            document.getElementById("studentEmail").value = "";
+            document.getElementById("answerKey").value = "";
+            document.getElementById("studentScript").value = "";
+            
+           
+            document.getElementById("feedbackText").value = "";
+            document.getElementById("message").innerText = "";
+            
+          
+            document.getElementById("emailInput").value = "";
+            document.getElementById("otpInput").value = "";
+            document.getElementById("emailInput").disabled = false;
+        }
+
+        
+        if (sessionStorage.getItem('isAuthenticated') === 'true') {
+            isAuthenticated = true;
+            teacherEmail = sessionStorage.getItem('teacherEmail') || '';
+            updateAuthUI();
+        }
+
+        
         function scrollToSection(sectionId) {
             let section = document.getElementById(sectionId);
-            let offset =70; 
+            let offset = 70; 
             let sectionPosition = section.getBoundingClientRect().top + window.scrollY - offset;
-
             window.scrollTo({ top: sectionPosition, behavior: "smooth" });
         }
-    </script>
 
+        
+        const authenticateButton = document.getElementById('authenticateButton');
+        authenticateButton.addEventListener('click', function() {
+            if (isAuthenticated) {
+                
+                isAuthenticated = false;
+                teacherEmail = '';
+                sessionStorage.removeItem('isAuthenticated');
+                sessionStorage.removeItem('teacherEmail');
+                updateAuthUI();
+            } else {
+               
+                const otpModal = new bootstrap.Modal(document.getElementById('otpModal'));
+                otpModal.show();
+            }
+        });
+
+        
+        const sendOtpButton = document.getElementById("sendOtpButton");
+        const verifyOtpButton = document.getElementById("verifyOtpButton");
+        const emailInput = document.getElementById("emailInput");
+        const otpInput = document.getElementById("otpInput");
+
+        sendOtpButton.addEventListener('click', function () {
+            const email = emailInput.value;
+            if (!email) {
+                alert('Please enter your email.');
+                return;
+            }
+
+           
+            const csrfToken = document.querySelector('[name=csrf-token]').content; 
+
+            
+            fetch("/send-otp/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    'X-CSRFToken': csrfToken
+                },
+                body: `email=${encodeURIComponent(email)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === "success") {
+                    
+                    emailInput.disabled = true;
+                }
+            })
+            .catch(error => {
+                alert("There was an error sending the OTP.");
+                console.error(error);
+            });
+        });
+
+        verifyOtpButton.addEventListener("click", function () {
+            const email = emailInput.value;
+            const otp = otpInput.value;
+            if (!otp) {
+                alert("Please enter the OTP.");
+                return;
+            }
+
+            
+            fetch("/verify-otp/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    'X-CSRFToken': document.querySelector('[name=csrf-token]').content
+                },
+                body: `email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    
+                    isAuthenticated = true;
+                    teacherEmail = email;
+                    sessionStorage.setItem('isAuthenticated', 'true');
+                    sessionStorage.setItem('teacherEmail', email);
+                    updateAuthUI();
+                    
+                    
+                    const otpModal = bootstrap.Modal.getInstance(document.getElementById('otpModal'));
+                    otpModal.hide();
+                    emailInput.disabled = false;
+                    emailInput.value = '';
+                    otpInput.value = '';
+                    
+                    alert("OTP verified successfully!");
+                } else {
+                    alert(data.message || "Invalid OTP.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("There was an error verifying the OTP.");
+            });
+        });
+
+        
+        const evaluationForm = document.getElementById('evaluationForm');
+        evaluationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!isAuthenticated) {
+                alert("Please authenticate first!");
+                return;
+            }
+
+            const teacherEmail = document.getElementById("teacherEmail").value;
+            const studentEmail = document.getElementById("studentEmail").value;
+            const answerKey = document.getElementById("answerKey").files[0];
+            const studentScript = document.getElementById("studentScript").files[0];
+
+            if (!teacherEmail || !studentEmail || !answerKey || !studentScript) {
+                alert("Please fill all fields and upload the required files.");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("teacher_email", teacherEmail);
+            formData.append("student_email", studentEmail);
+            formData.append("answer_key", answerKey);
+            formData.append("student_script", studentScript);
+
+            document.getElementById("evaluateButton").disabled = true;
+
+            fetch("/evaluate/", {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to evaluate script.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("feedbackText").value = data.feedback;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error generating feedback.");
+            })
+            .finally(() => {
+                document.getElementById("evaluateButton").disabled = false;
+            });
+        });
+
+        
+        document.getElementById("sendFeedbackButton").addEventListener("click", function () {
+            const teacherEmail = document.getElementById("teacherEmail").value;
+            const studentEmail = document.getElementById("studentEmail").value;
+            const feedback = document.getElementById("feedbackText").value;
+
+            if (!feedback.trim()) {
+                alert("Feedback cannot be empty.");
+                document.getElementById("feedbackText").style.border = "2px solid red";
+                return;
+            }
+
+            document.getElementById("sendFeedbackButton").disabled = true;
+            document.getElementById("feedbackText").style.border = "";
+
+            fetch("/send-feedback/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    teacher_email: teacherEmail, 
+                    student_email: studentEmail, 
+                    feedback: feedback 
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to send feedback.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("message").innerText = `Results sent to ${studentEmail}`;
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error sending feedback.");
+            })
+            .finally(() => {
+                document.getElementById("sendFeedbackButton").disabled = false;
+            });
+        });
+
+        
+        document.getElementById("resetButton").addEventListener("click", function () {
+            resetStudentInputs();
+        });
+    });
+</script>
 
     <script>
         function resetStudentInputs() {
@@ -534,7 +893,8 @@
         }
     </script>
 
-    <script src="{% static 'js/evaluation.js' %}"></script>
+    <!-- <script src="{% static 'js/evaluation.js' %}"></script> -->
+     
     <script src="{% static 'js/translation.js' %}"></script>
 
 

@@ -18,6 +18,15 @@ import time
 
 
 
+import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from django.core.cache import cache 
+
+
+from django.conf import settings
+import os
 
 env = environ.Env()
 environ.Env.read_env()
@@ -223,6 +232,78 @@ def extract_text(file):
     else:
         return None  
     
+
+
+
+
+
+def send_email(to_email, otp):
+   
+    from_email = os.environ.get('EMAIL_HOST_USER')  
+    password = os.environ.get('EMAIL_HOST_PASSWORD') 
+    
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(from_email, password)
+
+        msg = MIMEMultipart()
+        msg["From"] = from_email
+        msg["To"] = to_email
+        msg["Subject"] = "Your OTP for Authentication"
+
+        body = f"Your OTP is {otp}. Please enter it in the website to verify your identity."
+        msg.attach(MIMEText(body, "plain"))
+
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.quit()
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+
+
+
+def send_otp(request):
+    if request.method == "POST":
+        try:
+            
+            email = request.POST.get("email")
+            if not email:
+                return JsonResponse({"status": "fail", "message": "Email is required."})
+
+           
+            otp = random.randint(100000, 999999)
+            cache.set(email, otp, timeout=300)  
+
+           
+            send_email(email, otp)
+
+            return JsonResponse({"status": "success", "message": "OTP sent successfully."})
+        except Exception as e:
+            return JsonResponse({"status": "fail", "message": f"Error: {e}"})
+
+    return JsonResponse({"status": "fail", "message": "Invalid request method."})
+
+@csrf_exempt
+def verify_otp(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        otp = request.POST.get("otp")
+
+       
+        stored_otp = cache.get(email)
+
+        if stored_otp and int(otp) == stored_otp:
+            cache.delete(email)  
+            return JsonResponse({"status": "success", "message": "OTP verified successfully."})
+        else:
+            return JsonResponse({"status": "fail", "message": "Invalid OTP."})
+
+    return JsonResponse({"status": "fail", "message": "Invalid request method."})
+
+
+
+
 from google.cloud import translate_v2 as translate
 
 def translate_text(request):
