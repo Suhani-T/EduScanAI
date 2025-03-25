@@ -338,7 +338,7 @@
         }
 
         .dark-mode .form-control {
-            background-color: #3d3d3d;
+            background-color: #c0bfbf;
             color: #f8f9fa;
             border-color: #4d4d4d;
         }
@@ -365,6 +365,66 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 
 
+/* //ripple effect */
+
+
+        #darkModeToggle {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+           
+        }
+
+        #darkModeToggle .dark-mode-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        #darkModeToggle .bi {
+            transition: transform 0.5s ease, color 0.3s ease;
+        }
+
+        #darkModeToggle:hover .bi {
+            transform: rotate(15deg);
+        }
+
+        .dark-mode #darkModeToggle .bi-sun-fill {
+            animation: sunPulse 2s infinite;
+        }
+
+        @keyframes sunPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .dark-mode #darkModeToggle .bi-moon-fill {
+            animation: moonFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes moonFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
 
 
 
@@ -382,12 +442,19 @@
             <ul class="navbar-nav">
                 <!-- <li class="nav-item"><a class="nav-link" href="#">Home</a></li> -->
                 <!-- <li class="nav-item"><a class="nav-link" href="#">About</a></li> -->
-                
+                <!-- <li class="nav-item"><button id="darkModeToggle" class="btn btn-link nav-link"> <i class="bi bi-moon-fill"></i> Dark Mode</button></li> -->
+                <li class="nav-item">
+                    <button id="darkModeToggle" class="btn btn-link nav-link">
+                        <i class="bi bi-moon-fill"></i>
+                        <span class="dark-mode-text">Dark Mode</span>
+                        <span class="dark-mode-ripple"></span> 
+                    </button>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
                 
 
 
-                <li class="nav-item"><button id="darkModeToggle" class="btn btn-link nav-link"> <i class="bi bi-moon-fill"></i> Dark Mode</button></li>
+                
 
                 <li class="nav-item dropdown notranslate">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -949,41 +1016,79 @@
 
 
 //dark mode js
-
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme')) {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const icon = darkModeToggle.querySelector('i');
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const icon = darkModeToggle.querySelector('i');
+            const text = darkModeToggle.querySelector('.dark-mode-text') || document.createElement('span');
+            
         
-        
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            icon.classList.remove('bi-moon-fill');
-            icon.classList.add('bi-sun-fill');
-            darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> Light Mode';
+            const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = localStorage.getItem('theme') || (systemPrefersDark ? 'dark' : 'light');
+            
+                if (currentTheme === 'dark') {
+                enableDarkMode(darkModeToggle, icon, text, false);
+            }
+
+            
+            darkModeToggle.addEventListener('click', function(e) {
+                
+                createRippleEffect(this, e);
+                
+            
+                if (document.body.classList.contains('dark-mode')) {
+                    disableDarkMode(darkModeToggle, icon, text);
+                } else {
+                    enableDarkMode(darkModeToggle, icon, text, true);
+                }
+            });
+        });
+        //ripple js
+        function createRippleEffect(button, event) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('dark-mode-ripple');
+            
+            const rect = button.getBoundingClientRect();
+            ripple.style.left = `${event.clientX - rect.left}px`;
+            ripple.style.top = `${event.clientY - rect.top}px`;
+            
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
         }
 
-        darkModeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
+        function enableDarkMode(button, icon, text, animate = true) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
             
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                icon.classList.remove('bi-moon-fill');
-                icon.classList.add('bi-sun-fill');
-                darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> Light Mode';
-            } else {
-                localStorage.setItem('theme', 'light');
-                icon.classList.remove('bi-sun-fill');
-                icon.classList.add('bi-moon-fill');
-                darkModeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> Dark Mode';
+            
+            icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            if (text) text.textContent = 'Light Mode';
+            
+        
+            if (animate) {
+                icon.style.animation = 'sunPulse 0.5s ease';
+                setTimeout(() => {
+                    icon.style.animation = 'sunPulse 2s infinite';
+                }, 500);
             }
-        });
-    });
+        }
+
+        function disableDarkMode(button, icon, text, animate = true) {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            
+        
+            icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            if (text) text.textContent = 'Dark Mode';
+            
+            
+            if (animate) {
+                icon.style.animation = 'moonFloat 0.5s ease';
+                setTimeout(() => {
+                    icon.style.animation = 'moonFloat 3s infinite ease-in-out';
+                }, 500);
+            }
+        }
+
 
     </script>
 
