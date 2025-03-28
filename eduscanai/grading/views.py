@@ -8,6 +8,7 @@ import json
 import chardet
 import easyocr
 from pdf2image import convert_from_bytes
+import tempfile
 import fitz
 import pytesseract
 from docx import Document
@@ -48,11 +49,21 @@ def extract_text_from_pdf(pdf_bytes):
     return extracted_text
 
 def extract_text_from_docx(docx_bytes):
-    with open("temp.docx", "wb") as f:
-        f.write(docx_bytes)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as tmp:
+        tmp.write(docx_bytes)
+        tmp_path = tmp.name
 
-    doc = Document("temp.docx")
-    return "\n".join([para.text for para in doc.paragraphs])
+    doc = Document(tmp_path)
+    text = "\n".join([para.text for para in doc.paragraphs])
+
+    os.remove(tmp_path)  # cleanup the temp file
+    return text
+
+    # with open("temp.docx", "wb") as f:
+    #     f.write(docx_bytes)
+
+    # doc = Document("temp.docx")
+    # return "\n".join([para.text for para in doc.paragraphs])
 
 def extract_text(file):
     file_name = file.name.lower()

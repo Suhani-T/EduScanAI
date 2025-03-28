@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const answerKeyInput= document.getElementById("answerKey");
     const studentScriptInput = document.getElementById("studentScript");
 
-    evaluateButton.addEventListener("click", function () {
+    evaluateButton.addEventListener("click", function (e) {
+        e.preventDefault();
         const teacherEmail =teacherEmailInput.value;
         const studentEmail= studentEmailInput.value;
         const answerKey = answerKeyInput.files[0];

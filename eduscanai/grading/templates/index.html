@@ -8,8 +8,10 @@
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
     <meta name="csrf-token" content="{{ csrf_token }}">
     <style>
         :root {
@@ -457,7 +459,6 @@
         }
 
 
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 
 
 /* //ripple effect */
@@ -579,6 +580,49 @@
         .dark-mode ::placeholder {
         color: white;
         opacity: 1;
+        }
+
+        body.dark-mode .text-muted {
+            color: #b0b0b0 !important;
+        }
+
+        .dropzone {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dropzone:hover {
+            background: #f2f2f2;
+            transition: background 0.3s ease;
+        }
+        .dark-mode .dropzone {
+            background: #1e1e1e; 
+        }
+
+        .dark-mode .dropzone:hover {
+            background: #2c2c2c;
+        }
+    
+
+        .dropzone.dragover {
+            background: #e9ecef;
+            border-color: #007bff;
+        }
+
+        .file-preview {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .file-preview i {
+            font-size: 1.2rem;
         }
 
 
@@ -800,8 +844,10 @@
 
                 <div class="mb-3">
                     <label for="answerKey" class="form-label fw-bold">Answer Key Document</label>
-                    <input type="file" class="form-control" id="answerKey" accept=".txt" required>
-                    <small class="text-muted">Upload text document</small>
+                    <div id="answerKeyDrop" class="dropzone">Drop Answer Key Here or Click to Upload</div>
+                    <input type="file" class="form-control d-none" id="answerKey" accept=".pdf,.txt,.docx" required>
+                    <div id="answerKeyPreview" class="file-preview text-muted"></div>
+                    <small class="text-muted">Accepted formats: PDF, TXT, DOCX (typed or scanned).</small>
                 </div>
 
                 <div class="mb-3">
@@ -810,7 +856,7 @@
                         placeholder="Enter any specific instructions or custom evaluation criteria for AI...">
                     <small class="text-muted">Provide additional specifications for AI evaluation.<br>Example: "Do not provide partial marks."</small>
                 </div>
-                
+
     
                 <div class="student-input-box p-3 border rounded position-relative">
                     <button type="button" class="btn btn-outline-secondary position-absolute top-0 end-0 m-2" id="resetButton">Reset</button>
@@ -823,8 +869,10 @@
 
                     <div class="mb-3">
                         <label for="studentScript" class="form-label fw-bold">Student's Answer Script</label>
-                        <input type="file" class="form-control" id="studentScript" accept=".pdf,.jpg,.png" required>
-                        <small class="text-muted">Please scan and upload document</small>
+                        <div id="studentScriptDrop" class="dropzone">Drop Answer Script Here or Click to Upload</div>
+                        <input type="file" class="form-control d-none" id="studentScript" accept=".pdf,.txt,.docx" required>
+                        <div id="studentScriptPreview" class="file-preview text-muted"></div>
+                        <small class="text-muted">Accepted formats: PDF, TXT, DOCX (typed or scanned).</small>
                     </div>
                 </div>
                 <br>
@@ -1271,6 +1319,8 @@
     <script src="{% static 'js/evaluation.js' %}"></script>
      
     <script src="{% static 'js/translation.js' %}"></script>
+
+    <script src="{% static 'js/dropzone.js' %}"></script>
 
 
 
