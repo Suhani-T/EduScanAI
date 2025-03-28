@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // formData.append("custom_prompt", customPrompt);
         formData.set("custom_prompt", customPrompt);
 
-        evaluateButton.disabled = true; 
+        evaluateButton.disabled = true;
+        document.getElementById("evaluateLoader").style.display = "inline-block"; 
 
         fetch("/evaluate/", {
             method: "POST",
@@ -62,6 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .finally(() => {
             evaluateButton.disabled = false; 
+            evaluateButton.disabled = false;
+            document.getElementById("evaluateLoader").style.display = "none";
         });
     });
 
@@ -81,6 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         sendFeedbackButton.disabled = true; 
+        document.getElementById("sendLoader").style.display = "inline-block";
+        
         feedbackText.style.border = "";
     
         fetch("/send-feedback/", {
@@ -103,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .finally(() => {
             sendFeedbackButton.disabled = false; 
+            document.getElementById("sendLoader").style.display = "none";
         });
     });
 
