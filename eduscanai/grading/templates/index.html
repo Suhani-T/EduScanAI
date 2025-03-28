@@ -804,12 +804,13 @@
                     <small class="text-muted">Upload text document</small>
                 </div>
 
-                <!-- <div class="mb-3">
-                    <label for="customPrompt" class="form-label fw-bold">Custom AI Evaluation Prompt (Optional)</label>
-                    <textarea id="customPrompt" name="custom_prompt" class="form-control" rows="4" 
-                              placeholder="Enter any specific instructions or custom evaluation criteria for AI..." maxlength="500"></textarea>
+                <div class="mb-3">
+                    <label for="customPrompt" class="form-label fw-bold">Custom Evaluation Criteria (Optional):</label>
+                    <input type="text" id="customPrompt" name="custom_prompt" class="form-control"
+                        placeholder="Enter any specific instructions or custom evaluation criteria for AI...">
                     <small class="text-muted">Provide additional specifications for AI evaluation.<br>Example: "Do not provide partial marks."</small>
-                </div> -->
+                </div>
+                
     
                 <div class="student-input-box p-3 border rounded position-relative">
                     <button type="button" class="btn btn-outline-secondary position-absolute top-0 end-0 m-2" id="resetButton">Reset</button>
@@ -1254,9 +1255,20 @@
 
     </script>
 
+    <script>
+        // function scrollToSection(sectionId) {
+        //     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+        // }
+        function scrollToSection(sectionId) {
+            let section = document.getElementById(sectionId);
+            let offset =70; 
+            let sectionPosition = section.getBoundingClientRect().top + window.scrollY - offset;
 
+            window.scrollTo({ top: sectionPosition, behavior: "smooth" });
+        }
+    </script>
 
-    <!-- <script src="{% static 'js/evaluation.js' %}"></script> -->
+    <script src="{% static 'js/evaluation.js' %}"></script>
      
     <script src="{% static 'js/translation.js' %}"></script>
 

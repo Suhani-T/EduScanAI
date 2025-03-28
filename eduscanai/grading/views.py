@@ -110,45 +110,54 @@ def evaluate(request):
             answer_key_file = request.FILES.get("answer_key")
             student_script_file = request.FILES.get("student_script")
 
-            if not answer_key_file or not student_script_file:
-                return JsonResponse({"error": "both answer key and student script are required."}, status=400)
+            custom_prompt = request.POST.get("custom_prompt", "").strip()
 
-          
+
+            if not answer_key_file or not student_script_file:
+                return JsonResponse({"error": "Both answer key and student script are required."}, status=400)
+
             answer_key = extract_text(answer_key_file)
             student_script = extract_text(student_script_file)
 
             if not answer_key or not student_script:
-                return JsonResponse({"error": "failed to extract text."}, status=400)
+                return JsonResponse({"error": "Failed to extract text from one or both files."}, status=400)
 
-           
+            default_prompt = f"""
+                Evaluate the student's answer: {student_script} against the answer key: {answer_key} based on the following criteria:
+                1. Constructive Feedback: Highlight correct points, errors, and areas for improvement.
+                2. Score Calculation: Assign a total score based on the marking scheme, if available. Apply partial marking for subjective questions unless explicitly stated by the teacher.
+                3. Spelling Considerations: Ignore minor spelling mistakes, except in language, grammar, or literature subjects.
+                4. Answer Relevance Check: Determine if the response fully, partially, or does not address the question. Highlight missing key points.
+                5. Clarity & Coherence Assessment: Evaluate whether the answer is well-structured and logically presented.
+                6. Keyword Matching (for factual/technical subjects): Ensure key terms or concepts from the answer key are present.
+                7. Difficulty Level Analysis: Identify if the student struggles with basic or advanced concepts based on errors.
+                8. Misconception Detection: Spot and correct misunderstandings or misinterpretations.
+                9. Response Comparison: Compare the student’s response against high-quality sample answers.
+                10. Study Resources: Suggest relevant materials for improvement.
+                11. Format Output as follows: 
+                    - Feedback: Strengths, mistakes, and improvement suggestions.  
+                    - Score: Marks obtained for that specific question.  
+                    - Study Resources: Recommendations for weak areas.
+                12. Provide a brief summary of the student's overall strengths and weaknesses.
+                13. End the feedback with 2-3 motivational or encouraging sentences naturally, without using headings like 'Conclusion' or 'Concluding Note'. It should feel like a genuine and warm closing remark.
+            """
+            if custom_prompt:
+                prompt = f"Teacher's Custom Evaluation Criteria (takes precedence over the default rules if conflicting): \n {custom_prompt} \n\n Default Rules: \n{default_prompt}"
+            else:
+                prompt = default_prompt
+
+            # final_prompt = f"{custom_prompt}\n\n{default_prompt}" if custom_prompt else default_prompt
+
             model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(
-                f"""Evaluate the student's answer: {student_script} against the answer key: {answer_key} based on the following criteria:\n"
-                "1. Constructive Feedback: Highlight correct points, errors, and areas for improvement.\n"
-                "2. Score Calculation: Assign a total score based on the marking scheme, if available. Apply partial marking for subjective questions unless explicitly stated by the teacher.\n"
-                "3. Spelling Considerations: Ignore minor spelling mistakes, except in language, grammar, or literature subjects, where accuracy is important.\n"
-                "4. Answer Relevance Check: Determine if the response fully, partially, or does not address the question. Highlight missing key points.\n"
-                "5. Clarity & Coherence Assessment: Evaluate whether the answer is well-structured and logically presented, suggesting improvements if needed.\n"
-                "6. Keyword Matching (for factual/technical subjects): Ensure key terms or concepts from the answer key are present. In technical subjects like science, verify that important terms match those in the answer key.\n"
-                "7. Difficulty Level Analysis: Identify if the student struggles with basic or advanced concepts based on errors.\n"
-                "8. Misconception Detection: Spot and correct misunderstandings or misinterpretations.\n"
-                "9. Response Comparison: Compare the student’s response against high-quality sample answers to provide a better evaluation.\n"
-                "10. Study Resources: Suggest relevant websites, videos, or articles to help improve weak areas.\n"
-                "11. Format the response as follows:\n"
-                "   - Feedback: Strengths, mistakes, and improvement suggestions.\n"
-                "   - Score: Marks obtained for that specific question.\n"
-                "   - Study Resources: Recommendations for weak areas (if applicable)."""
-            )
-            
+            response = model.generate_content(prompt)
 
-            
             feedback = response.candidates[0].content.parts[0].text if response.candidates else "Unable to generate feedback."
 
             return JsonResponse({"feedback": feedback})
 
         except Exception as e:
             print("Error in evaluate():", str(e))
-            return JsonResponse({"error": "failed to generate feedback", "details": str(e)}, status=500)
+            return JsonResponse({"error": "Failed to generate feedback", "details": str(e)}, status=500)
 
 @csrf_exempt
 def send_feedback(request):
