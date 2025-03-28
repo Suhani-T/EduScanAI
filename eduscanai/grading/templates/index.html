@@ -253,18 +253,24 @@
         } */
 
         
-
         .review img {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 8rem;
-            transition: transform 0.2s ease-in-out;
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 8rem auto 0 8rem; 
+            /* margin-top: 8rem auto 0 8rem; */
+            transition: transform 0.2s ease-in-out, filter 0.3s ease;
         }
 
         .review img:hover {
-            transform:scale(1.1);
+            transform: scale(1.1);
         }
+
+        /* dark mode filter */
+        body.dark-mode .review img {
+            filter: invert(1) hue-rotate(110deg) brightness(1) contrast(1.5);
+        }
+        
          
 
         .inputs {
@@ -289,18 +295,7 @@
             border-radius: 10px;
         }
 
-        /* Review Image */
-        .review img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .review img:hover {
-            transform: scale(1.1);
-        }
+        
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -442,10 +437,7 @@
                 text-align: center;
             }
 
-            .review img {
-                margin-left: 0;
-                max-width: 80%;
-            }
+            
         }
 
 
@@ -852,10 +844,17 @@
 
                 <div class="mb-3">
                     <label for="customPrompt" class="form-label fw-bold">Custom Evaluation Criteria (Optional):</label>
+                    <textarea id="customPrompt" name="custom_prompt" class="form-control"
+                        placeholder="Enter any specific instructions or custom evaluation criteria for AI..." rows="2"></textarea>
+                    <small class="text-muted">Provide additional specifications for AI evaluation.<br>Example: "Do not provide partial marks."</small>
+                </div>
+
+                <!-- <div class="mb-3">
+                    <label for="customPrompt" class="form-label fw-bold">Custom Evaluation Criteria (Optional):</label>
                     <input type="text" id="customPrompt" name="custom_prompt" class="form-control"
                         placeholder="Enter any specific instructions or custom evaluation criteria for AI...">
                     <small class="text-muted">Provide additional specifications for AI evaluation.<br>Example: "Do not provide partial marks."</small>
-                </div>
+                </div> -->
 
     
                 <div class="student-input-box p-3 border rounded position-relative">
@@ -997,6 +996,8 @@
                 document.getElementById("emailInput").value = "";
                 document.getElementById("otpInput").value = "";
                 document.getElementById("emailInput").disabled = false;
+
+                document.getElementById("studentScriptPreview").innerHTML = "";
             }
 
             
@@ -1218,6 +1219,7 @@
         function resetStudentInputs() {
             document.getElementById("studentEmail").value = "";
             document.getElementById("studentScript").value = "";
+            document.getElementById("studentScriptPreview").innerHTML = "";
         }
 
         function setLanguage(lang) {
@@ -1314,6 +1316,11 @@
 
             window.scrollTo({ top: sectionPosition, behavior: "smooth" });
         }
+
+        document.getElementById("customPrompt").addEventListener("input", function () {
+            this.style.height = "auto"; 
+            this.style.height = (this.scrollHeight) + "px";  
+        });
     </script>
 
     <script src="{% static 'js/evaluation.js' %}"></script>

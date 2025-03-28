@@ -109,11 +109,12 @@ document.addEventListener("DOMContentLoaded", function () {
     resetButton.addEventListener("click", function () {
         feedbackText.value = "";
         message.innerText = "";
-        teacherEmailInput.value = "";
+        // teacherEmailInput.value = "";
         studentEmailInput.value = "";
-        answerKeyInput.value = "";
+        // answerKeyInput.value = "";
         studentScriptInput.value = "";
-        document.getElementById("customPrompt").value = "";
+        // document.getElementById("customPrompt").value = "";
         feedbackText.style.border = ""; 
+        document.getElementById("studentScriptPreview").innerHTML = "";
     });
 });
