@@ -273,3 +273,42 @@ button.feedbackbtn {
                 box-shadow 0.3s ease;
 }
     
+
+/* darkmode for dropdown */
+
+body.dark-mode .nav-item.dropdown .nav-link.dropdown-toggle {
+    color: #f8f9fa;
+}
+
+body.dark-mode .nav-item.dropdown .nav-link.dropdown-toggle:hover {
+    color: var(--primary-color);
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #2d2d2d;
+    border: 1px solid #4d4d4d;
+}
+
+body.dark-mode .dropdown-item {
+    color: #f8f9fa;
+    background-color: transparent;
+}
+
+body.dark-mode .dropdown-item:hover,
+body.dark-mode .dropdown-item:focus {
+    background-color: #3d3d3d;
+    color: rgb(176, 150, 226);
+}
+
+body.dark-mode .dropdown-divider {
+    border-color: #4d4d4d;
+}
+
+
+.nav-link.dropdown-toggle,
+.dropdown-menu,
+.dropdown-item {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease;
+}
