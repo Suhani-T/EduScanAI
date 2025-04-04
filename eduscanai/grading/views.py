@@ -29,6 +29,9 @@ from django.core.cache import cache
 from django.conf import settings
 import os
 
+
+
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -56,7 +59,7 @@ def extract_text_from_docx(docx_bytes):
     doc = Document(tmp_path)
     text = "\n".join([para.text for para in doc.paragraphs])
 
-    os.remove(tmp_path)  # cleanup the temp file
+    os.remove(tmp_path) 
     return text
 
     # with open("temp.docx", "wb") as f:
@@ -359,3 +362,36 @@ def translate_text(request):
         translated_texts = [t['translatedText'] for t in translations]
 
         return JsonResponse({"translations": translated_texts})
+        
+
+@csrf_exempt
+def submit_feedback_form(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            email = data.get('email')
+            feedback_type = data.get('type')
+            message = data.get('message')
+
+            subject = f"New {feedback_type} from {username}"
+            body = (
+                f"Username: {username}\n"
+                f"Email: {email}\n"
+                f"Type: {feedback_type}\n\n"
+                f"Message:\n{message}"
+            )
+
+            send_mail(
+                subject,
+                body,
+                email, 
+                ['aieduscan@gmail.com'],
+                fail_silently=False,
+            )
+
+            return JsonResponse({'success': True, 'message': 'Feedback sent successfully'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
