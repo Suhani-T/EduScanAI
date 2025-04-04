@@ -39,9 +39,7 @@
                 <li class="nav-item"><a class="nav-link" href="#" onclick="scrollToSection('about-section')">About</a></li>
                 
 
-
-                
-
+             
                 <li class="nav-item dropdown notranslate">
                     <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         🌍 <span id="selected-language">English</span>
@@ -353,61 +351,37 @@
         </a>
     
        
-        <div id="feedback-modal" 
-             style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-                    background-color: rgba(0,0,0,0.7); z-index: 2000; align-items: center; 
-                    justify-content: center;" 
-             class="modal">
-            <div class="feedback-form" 
-                 style="background-color: white; padding: 25px; border-radius: 10px; 
-                        width: 90%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-                        position: relative;">
-                <button id="close-feedback" 
-                        style="position: absolute; top: 10px; right: 10px; background: none; 
-                               border: none; font-size: 20px; cursor: pointer; color: #666;">
-                    &times;
-                </button>
-                <h2 style="color: var(--primary-color); margin-bottom: 20px; text-align: center;">
-                    Feedback Form
-                </h2>
+        <div id="feedback-modal" class="modal">
+            <div class="feedback-form">
+                <button id="close-feedback">&times;</button>
+                <h2>Feedback Form</h2>
                 <form id="feedbackFormfooter">
-                    <div class="form-group" style="margin-bottom: 15px;">
+                    <div class="form-group">
                         <label for="feedback-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="feedback-username" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; 
-                                      border-radius: 5px; background-color: white;" required>
+                        <input type="text" class="form-control-feedback" id="feedback-username" required>
                     </div>
-    
-                    <div class="form-group" style="margin-bottom: 15px;">
+        
+                    <div class="form-group">
                         <label for="feedback-email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="feedback-email" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; 
-                                      border-radius: 5px; background-color: white;" required>
+                        <input type="email" class="form-control-feedback" id="feedback-email" required>
                     </div>
-    
-                    <div class="form-group" style="margin-bottom: 15px;">
+        
+                    <div class="form-group">
                         <label for="feedback-type" class="form-label">Type</label>
-                        <select class="form-control" id="feedback-type" 
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; 
-                                       border-radius: 5px; background-color: white; cursor: pointer;" required>
+                        <select class="form-control-feedback" id="feedback-type" required>
                             <option value="">Select an option</option>
                             <option value="feedback">General Feedback</option>
                             <option value="spam">Report Spam</option>
                             <option value="issue">Report an Issue</option>
                         </select>
                     </div>
-    
-                    <div class="form-group" style="margin-bottom: 20px;">
+        
+                    <div class="form-group">
                         <label for="feedback-text" class="form-label">Your Feedback/Report</label>
-                        <textarea class="form-control" id="feedback-text" rows="5" 
-                                  style="width: 100%; padding: 10px; border: 1px solid #ddd; 
-                                         border-radius: 5px; background-color: white; resize: vertical;" required></textarea>
+                        <textarea class="form-control-feedback" id="feedback-text" rows="5" required></textarea>
                     </div>
-    
-                    <button type="submit" class="try" 
-                            style="width: 100%; padding: 12px; font-size: 16px; cursor: pointer;">
-                        Submit
-                    </button>
+        
+                    <button type="submit" class="feedbackbtn">Submit</button>
                 </form>
             </div>
         </div>
