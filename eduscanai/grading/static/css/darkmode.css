@@ -210,3 +210,66 @@ body.dark-mode .text-muted {
 .dark-mode .dropzone:hover {
     background: #2c2c2c;
 }
+
+
+
+/* dark mode feedback footer */
+
+body.dark-mode #feedback-modal {
+    background-color: rgba(0, 0, 0, 0.85) !important; 
+}
+
+body.dark-mode .feedback-form {
+    background-color: #2d2d2d;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .feedback-form h2 {
+    color: #f8f9fa;
+}
+
+body.dark-mode #close-feedback {
+    color: #cccccc;
+}
+
+body.dark-mode #close-feedback:hover {
+    color: var(--primary-color);
+}
+
+body.dark-mode .form-control-feedback {
+    background-color: #3d3d3d;
+    color: #f8f9fa;
+    border-color: #4d4d4d;
+}
+
+body.dark-mode .form-control-feedback:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(95, 48, 226, 0.3);
+}
+
+body.dark-mode .form-label {
+    color: #cccccc;
+}
+
+body.dark-mode button.feedbackbtn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+body.dark-mode button.feedbackbtn:hover {
+    background-color: var(--secondary-color);
+}
+
+#feedback-modal,
+.feedback-form,
+.feedback-form h2,
+#close-feedback,
+.form-control-feedback,
+.form-label,
+button.feedbackbtn {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+    
