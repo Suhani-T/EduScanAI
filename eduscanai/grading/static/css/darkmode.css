@@ -1,0 +1,212 @@
+body.dark-mode .review img {
+    filter: invert(1) hue-rotate(150deg) brightness(1) contrast(1.5);
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #f8f9fa;
+}
+
+.dark-mode .navbar {
+    background-color: #1a1a1a !important;
+}
+
+.dark-mode .overlay {
+    background: rgba(0, 0, 0, 0.8);
+    color: #f8f9fa;
+}
+
+.dark-mode .content {
+    color: #f8f9fa;
+}
+
+.dark-mode .inputs {
+    background-color: #2d2d2d;
+    color: #f8f9fa;
+}
+
+.dark-mode .form-control {
+    background-color: #c0bfbf;
+    color: #f8f9fa;
+    border-color: #4d4d4d;
+}
+
+.dark-mode .footer {
+    background-color: #1a1a1a;
+}
+
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-card {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .hero {
+        height: auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .overlay {
+        margin: auto;
+        text-align: center;
+    }
+
+    
+}
+
+
+.dark-mode .step-card {
+    background-color: transparent !important; 
+}
+
+
+.dark-mode .step-card .step-description {
+    color: #cccccc !important;
+}
+
+
+
+
+/* //ripple effect */
+
+
+#darkModeToggle {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+   
+}
+
+#darkModeToggle .dark-mode-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+#darkModeToggle .bi {
+    transition: transform 0.5s ease, color 0.3s ease;
+}
+
+#darkModeToggle:hover .bi {
+    transform: rotate(15deg);
+}
+
+.dark-mode #darkModeToggle .bi-sun-fill {
+    animation: sunPulse 2s infinite;
+}
+
+@keyframes sunPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.dark-mode #darkModeToggle .bi-moon-fill {
+    animation: moonFloat 3s infinite ease-in-out;
+}
+
+@keyframes moonFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+
+/* dark mode otp box */
+
+.dark-mode .modal-content {
+    background-color: #2d2d2d;
+    color: #f8f9fa;
+    border: 1px solid #444;
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: #444;
+}
+
+.dark-mode .modal-footer {
+    border-top-color: #444;
+}
+
+.dark-mode .form-label {
+    color: #9d65ff;
+}
+
+.dark-mode .form-control {
+    background-color: #515151 !important;
+    color: #f8f9fa;
+    border-color: #555;
+}
+
+.dark-mode .form-control:focus {
+    background-color: #3d3d3d;
+    color: #f8f9fa;
+    border-color: #7c25ff;
+    box-shadow: 0 0 0 0.25rem rgba(124, 37, 255, 0.25);
+}
+
+.dark-mode .btn-secondary {
+    background-color: #555;
+    border-color: #555;
+    color: #f8f9fa;
+}
+
+.dark-mode .sendotpbtn {
+    background-color: #000000;
+    color: #f8f9fa;
+    border-color: #000000;
+}
+
+.dark-mode .verifyotpbtn {
+    background-color: #5b17fa;
+    color: #f8f9fa;
+    border-color: #5b17fa;
+}
+
+.dark-mode .btn-close {
+    filter: invert(1);
+}
+
+.dark-mode ::placeholder {
+color: white;
+opacity: 1;
+}
+
+body.dark-mode .text-muted {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .dropzone {
+    background: #1e1e1e; 
+}
+
+.dark-mode .dropzone:hover {
+    background: #2c2c2c;
+}
