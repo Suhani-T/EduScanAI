@@ -26,4 +26,5 @@ urlpatterns = [
     path('send-otp/', grading.views.send_otp, name='send_otp'),
     path('verify-otp/', grading.views.verify_otp, name='verify_otp'),
     path('translate/', grading.views.translate_text, name='translate_text'),
+     path('submit-feedback/', grading.views.submit_feedback_form, name='submit_feedback'),
 ]
