@@ -25,3 +25,10 @@ migrations/*.pyc
 Thumbs.db
 
 credentials/service-account.json
+
+*.sh linguist-vendored
+*.pl linguist-vendo
+
+*.sh
+*.pl
+
