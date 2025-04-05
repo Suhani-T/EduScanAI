@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/EduScan_Banner.png" alt="EduScanAI Banner" width="100%">
+</p>
+
 <h1 align="center">
   <img src="assets/EduScan_logo.png" alt="EduScanAI" width="280"/><br>
   An AI-Powered Teacher Assistant
@@ -9,13 +13,16 @@ The AI-Powered Teacher Assistant is a web application designed to automate gradi
 
 ## Features
 
-- **Teacher Authentication**: Secure OTP authorization.
-- **Answer Evaluation**: AI analyzes student responses and generates detailed feedback.
-- **Real-Time Feedback**: Instant processing without data storage.
-- **Markdown Formatting**: Feedback is structured for better readability.
-- **Email Integration**: Teachers can review and send feedback directly to students.
-- **Cusomisable Prompt**: Teachers can further add specific instructions to the AI.
-- **Reviews & Reports**: Teachers can give genuine reviews or report issues regarding the website and its functionality.
+- **Teacher Authentication**: Secure and reliable OTP-based verification to ensure authorized access.
+- **Answer Evaluation**: AI-driven evaluation of student responses based on the provided answer key or prompt.
+- **Real-Time Feedback**: Immediate feedback generation without storing sensitive data on the server.
+- **Markdown-Formatted Responses**: Feedback is structured using Markdown for improved clarity and readability.
+- **Email Integration**: Teachers can review and send feedback directly to students via email from within the platform.
+- **Customizable Prompt**: Teachers have the flexibility to provide additional context or criteria to guide the AI's evaluation.
+- **Issue Reporting & Feedback Submission**: Teachers can submit reviews or report bugs, contributing to ongoing improvements.
+- **Accessibility Modes**: Option to switch between dark and light themes for a more comfortable user experience.
+- **Multilingual Support**: Interface and generated messages can be dynamically translated to support international users.
+
 
 
 - ## Tech Stack
@@ -24,6 +31,10 @@ The AI-Powered Teacher Assistant is a web application designed to automate gradi
 |------------|-------------|
 | ![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white) | **Backend Framework** used for server-side logic |
 | ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) | **Frontend** technologies used for UI and interactivity |
+
+- ## APIs Used
+| API | Description |
+|-----|-------------|
 | ![Gemini](https://img.shields.io/badge/Gemini%20API-4285F4?style=for-the-badge&logo=google&logoColor=white) | **AI Model** used for answer evaluation and feedback generation |
 | ![Google Cloud](https://img.shields.io/badge/Google%20Cloud%20Translation%20API-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white) <br> ![Document AI](https://img.shields.io/badge/Google%20Cloud%20Document%20AI-34A853?style=for-the-badge&logo=googlecloud&logoColor=white) | **Google Cloud APIs** for multilingual support and document parsing |
 
@@ -42,7 +53,7 @@ The AI-Powered Teacher Assistant is a web application designed to automate gradi
 
    ```sh
    git clone https://github.com/Suhani-T/EduScanAI.git
-   cd EduScanGIT
+   cd <name of your folder in which repository is cloned>
    cd eduscanai
    ```
 
@@ -87,9 +98,10 @@ The AI-Powered Teacher Assistant is a web application designed to automate gradi
 1. Authenticate yourself as the teacher.
 2. Upload a student's answer script.
 3. Provide an answer key for evaluation.
-4. Click "Evaluate" to generate AI-powered feedback.
-5. Review, edit and send feedback to students.
-6. Report any issues or give reviews through the feedback form
+4. Add further custom specifications or criteria for evaluation.
+5. Click "Evaluate" to generate AI-powered feedback.
+6. Review, edit and send feedback to students.
+7. Report any issues or give reviews through the feedback form.
 
 ## Enhancements & Future Scope
 
