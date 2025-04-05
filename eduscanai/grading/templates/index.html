@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -397,21 +398,58 @@
     
 
     <script>
+        if (!window.TRANSLATABLE_MESSAGES) {
+            window.TRANSLATABLE_MESSAGES = {
+                alertFillFields: "{{ _('Please fill all fields and upload the required files.') }}",
+                alertFeedbackEmpty: "{{ _('Feedback cannot be empty.') }}",
+                errorGeneratingFeedback: "{{ _('Error generating feedback.') }}",
+                errorSendingFeedback: "{{ _('Error sending feedback.') }}",
+                resultSent: "{{ _('Results sent to {email}') }}",
+                errorMissingCSRF: "{{ _('Error: CSRF token missing. Please refresh the page.') }}"
+            };
+        }
+        console.log("TRANSLATABLE_MESSAGES initialized:", window.TRANSLATABLE_MESSAGES);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const languageDropdown = document.getElementById("languageDropdown");
+            if (languageDropdown) {
+                languageDropdown.addEventListener("change", function () {
+                    const selectedLang = this.value;
+                    console.log("Language dropdown changed to:", selectedLang);
+
+
+                    translatePage(selectedLang) 
+                        .then(() => {
+                            console.log("Page translated to", selectedLang);
+                        })
+                        .catch(err => {
+                            console.error("Translation failed:", err);
+                        });
+                    
+                });
+            }
+            else {
+                console.warn("languageDropdown element not found");
+            }
+
+            rebindEventListeners();
+        });
+
+        
+
+        function setLanguage(lang) {
+            document.getElementById("selected-language").textContent = lang;
+        }
+        
+    </script>
+
+    <script>
         function resetStudentInputs() {
             document.getElementById("studentEmail").value = "";
             document.getElementById("studentScript").value = "";
             document.getElementById("studentScriptPreview").innerHTML = "";
         }
 
-        function setLanguage(lang) {
-            document.getElementById("selected-language").textContent = lang;
-        }
-
-
-        
-    </script>
-
-    <script>
         // function scrollToSection(sectionId) {
         //     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
         // }
@@ -429,8 +467,6 @@
         });
     </script>
 
-    <script src="{% static 'js/evaluation.js' %}"></script>
-     
     <script src="{% static 'js/translation.js' %}"></script>
 
     <script src="{% static 'js/dropzone.js' %}"></script>
