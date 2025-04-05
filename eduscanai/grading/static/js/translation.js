@@ -36,7 +36,7 @@ async function translateText(text, targetLang) {
 function translatePage(targetLang) {
     return new Promise((resolve, reject) => {
         // let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a, input[placeholder], textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
-        let elements = document.querySelectorAll("h1, h2, h3, p, button, label, a:not(.notranslate), input[placeholder], input, textarea, textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
+        let elements = document.querySelectorAll("h1, h2, h3, p, span, button, label, a:not(.notranslate), input[placeholder], input, textarea, textarea[placeholder], small.text-muted, .step-title, .step-description, h2.headings, #message");
 
         let textArray = [];
 
@@ -211,6 +211,8 @@ function sendFeedback() {
     .then(data => {
         // message.innerText = `Results sent to ${studentEmail}`;
         message.innerText = window.TRANSLATABLE_MESSAGES.resultSent.replace("{email}", studentEmail);
+        // message.innerText = translate("resultSent", { email: studentEmail });
+
     })
     .catch(error => {
         console.error("Error:", error);
