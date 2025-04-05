@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -230,7 +231,7 @@
 
                 <div class="mb-3">
                     <label for="answerKey" class="form-label fw-bold">Answer Key Document</label>
-                    <div id="answerKeyDrop" class="dropzone">Drop Answer Key Here or Click to Upload</div>
+                    <div id="answerKeyDrop" class="dropzone"><span>Drop Answer Key Here or Click to Upload</span></div>
                     <input type="file" class="form-control d-none" id="answerKey" accept=".pdf,.txt,.docx" required>
                     <div id="answerKeyPreview" class="file-preview text-muted"></div>
                     <small class="text-muted">Accepted formats: PDF, TXT, DOCX (typed or scanned).</small>
@@ -262,7 +263,7 @@
 
                     <div class="mb-3">
                         <label for="studentScript" class="form-label fw-bold">Student's Answer Script</label>
-                        <div id="studentScriptDrop" class="dropzone">Drop Answer Script Here or Click to Upload</div>
+                        <div id="studentScriptDrop" class="dropzone"><span>Drop Answer Script Here or Click to Upload</span></div>
                         <input type="file" class="form-control d-none" id="studentScript" accept=".pdf,.txt,.docx" required>
                         <div id="studentScriptPreview" class="file-preview text-muted"></div>
                         <small class="text-muted">Accepted formats: PDF, TXT, DOCX (typed or scanned).</small>
@@ -271,10 +272,9 @@
                 <br>
     
 
-                <div>
+                <div class="button-with-loader">
                     <!-- <button class="evaluate btn btn-primary" type="button" id="evaluateButton">Evaluate</button> -->
-                    <button type="submit" class="btn evaluate" id="evaluateButton" disabled>Evaluate</button>
-                    <div class="inline-loader" id="evaluateLoader"></div>
+                    <button type="submit" class="btn evaluate" id="evaluateButton" disabled>Evaluate</button><div class="inline-loader" id="evaluateLoader"></div>
                 </div>
             </form>
         </div>
@@ -293,10 +293,11 @@
                 <label for="feedbackText" class="form-label fw-bold">Generated Feedback</label>
                 <textarea id="feedbackText" class="form-control" rows="5" placeholder="Generated feedback will appear here..." required></textarea>
             </div>
-    
-            <button class="evaluate btn " type="button" id="sendFeedbackButton">Send Feedback</button>
-            <div class="inline-loader" id="sendLoader"></div>
-            <p id="message" class="mt-3 text-success fw-bold"></p>
+            
+            <div class="button-with-loader">
+                <button class="evaluate btn " type="button" id="sendFeedbackButton">Send Feedback</button><div class="inline-loader" id="sendLoader"></div>
+                <p id="message" class="mt-3 text-success fw-bold"></p>
+            </div>
         </form>
     </div>
     
@@ -397,21 +398,81 @@
     
 
     <script>
+        if (!window.TRANSLATABLE_MESSAGES) {
+            window.TRANSLATABLE_MESSAGES = {
+                authenticate:"{{ _('Authenticate') }}",
+                logout:"{{ _('Logout') }}",
+                
+                alertFillFields: "{{ _('Please fill all fields and upload the required files.') }}",
+                alertFeedbackEmpty: "{{ _('Feedback cannot be empty.') }}",
+                errorGeneratingFeedback: "{{ _('Error generating feedback.') }}",
+                errorSendingFeedback: "{{ _('Error sending feedback.') }}",
+                resultSent: "{{ _('Results sent to {email}') }}",
+                errorMissingCSRF: "{{ _('Error: CSRF token missing. Please refresh the page.') }}",
+
+                alertEnterEmail: "{{ _('Please enter your email.') }}",
+                otpSendSuccess: "{{ _('OTP sent successfully!') }}",
+                alertEnterOTP: "{{ _('Please enter the OTP.') }}",
+                alertOtpSendError: "{{ _('There was an error sending the OTP.') }}",
+                alertInvalidOtp: "{{ _('The OTP entered is invalid.') }}",
+                otpVerifiedSuccess: "{{ _('OTP verified successfully!') }}",
+                errorMissingCSRF: "{{ _('Error: CSRF token missing. Please refresh the page.') }}",
+                errorGeneratingFeedback: "{{ _('Error generating feedback.') }}",
+                errorSendingFeedback: "{{ _('Error sending feedback.') }}",
+                alertFeedbackEmpty: "{{ _('Feedback cannot be empty.') }}",
+                alertFillFields: "{{ _('Please fill all fields and upload the required files.') }}",
+                resultSent: "{{ _('Results sent to {email}') }}",
+                alertAuthenticateFirst:"{{ _('alertAuthenticateFirst') }}",
+
+                
+                feed_all_fields: "{{ _('Please fill in all fields') }}",
+                feed_valid_email: "{{ _('Please enter a valid email address') }}",
+                feed_thanks: "{{ _('Thank you for your feedback, {username}!') }}",
+                feed_error_submitting: "{{ _('There was an error submitting your feedback. Please try again.') }}"
+            };
+        }
+        console.log("TRANSLATABLE_MESSAGES initialized:", window.TRANSLATABLE_MESSAGES);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const languageDropdown = document.getElementById("languageDropdown");
+            if (languageDropdown) {
+                languageDropdown.addEventListener("change", function () {
+                    const selectedLang = this.value;
+                    console.log("Language dropdown changed to:", selectedLang);
+
+
+                    translatePage(selectedLang) 
+                        .then(() => {
+                            console.log("Page translated to", selectedLang);
+                        })
+                        .catch(err => {
+                            console.error("Translation failed:", err);
+                        });
+                    
+                });
+            }
+            else {
+                console.warn("languageDropdown element not found");
+            }
+
+            rebindEventListeners();
+        });
+
+        
+
+        function setLanguage(lang) {
+            document.getElementById("selected-language").textContent = lang;
+        }
+        
+    </script>
+
+    <script>
         function resetStudentInputs() {
             document.getElementById("studentEmail").value = "";
             document.getElementById("studentScript").value = "";
             document.getElementById("studentScriptPreview").innerHTML = "";
         }
 
-        function setLanguage(lang) {
-            document.getElementById("selected-language").textContent = lang;
-        }
-
-
-        
-    </script>
-
-    <script>
         // function scrollToSection(sectionId) {
         //     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
         // }
@@ -429,8 +490,6 @@
         });
     </script>
 
-    <script src="{% static 'js/evaluation.js' %}"></script>
-     
     <script src="{% static 'js/translation.js' %}"></script>
 
     <script src="{% static 'js/dropzone.js' %}"></script>

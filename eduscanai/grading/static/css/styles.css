@@ -416,6 +416,14 @@ border: 2px solid black;
     100% { transform: rotate(360deg); }
 }
 
+.button-with-loader {
+    display: flex;
+    align-items: center; 
+    flex-direction: row;
+    gap:8px;
+}
+
+
 
     /* feedback footer */
     #feedback-modal {

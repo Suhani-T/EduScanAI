@@ -40,12 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = { username, email, type, message };
 
         if (!formData.username || !formData.email || !formData.type || !formData.message) {
-            alert('Please fill in all fields');
+            // alert('Please fill in all fields');
+            alert(window.TRANSLATABLE_MESSAGES.feed_all_fields);
             return;
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            alert('Please enter a valid email address');
+            // alert('Please enter a valid email address');
+            alert(window.TRANSLATABLE_MESSAGES.feed_valid_email);
             return;
         }
 
@@ -67,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             console.log('Response data:', data);
             if (data.success) {
-                alert(`Thank you for your feedback, ${formData.username}!`);
+                // alert(`Thank you for your feedback, ${formData.username}!`);
+                const message = window.TRANSLATABLE_MESSAGES.feed_thanks.replace('{username}', formData.username);
                 document.getElementById('feedback-modal').style.display = 'none';
                 document.getElementById('feedbackFormfooter').reset();
             } else {
@@ -76,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error(' Fetch error:', error);
-            alert('There was an error submitting your feedback. Please try again.');
+            // alert('There was an error submitting your feedback. Please try again.');
+            alert(window.TRANSLATABLE_MESSAGES.feed_error_submitting);
         });
     });
 });
