@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img src="assets/EduScan_logo.png" alt="EduScanAI" width="200"/><br>
-  EduScanAI: An AI-Powered Teacher Assistant
+  <img src="assets/EduScan_logo.png" alt="EduScanAI" width="280"/><br>
+  An AI-Powered Teacher Assistant
 </h1>
 
 ## Overview
