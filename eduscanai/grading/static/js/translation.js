@@ -228,6 +228,7 @@ function sendFeedback() {
 function resetStudentInputs() {
     document.getElementById("studentEmail").value = "";
     document.getElementById("studentScript").value = "";
+    document.getElementById("studentScriptPreview").innerHTML = "";
 }
 
 
