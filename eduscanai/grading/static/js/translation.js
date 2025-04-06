@@ -225,10 +225,14 @@ function sendFeedback() {
     });
 }
 
+
 function resetStudentInputs() {
     document.getElementById("studentEmail").value = "";
     document.getElementById("studentScript").value = "";
     document.getElementById("studentScriptPreview").innerHTML = "";
+    document.getElementById("feedbackText").value = "";
+    document.getElementById("message").innerText = "";
+
 }
 
 
